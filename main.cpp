@@ -18,6 +18,8 @@ int main() {
     vector<int> t(length);  // temporary workspace
     // unit test for merge
     /* your code here */
+    
+
 
     // initialize and print input
     for(int i = 0; i < v.size(); i++) {
@@ -28,7 +30,7 @@ int main() {
 
     // sort v
     /* your code here */
-    mergeSort(v,t,0,length);
+    mergeSort(v,t,0,length - 1);
     //mergeSortedLists(v,t,0,length/2,length - 1);
 
     // print output
@@ -49,13 +51,13 @@ int main() {
 
 void mergeSort(vector<int>& v,vector<int>& t, int left, int right){
     int center;
-    if((right - left) == 1){
+    if(right <= left){
         return;
     }
     else{
         center = (left + right)/2;
         mergeSort(v,t,left,center);
-        mergeSort(v,t,center,right);
+        mergeSort(v,t,center + 1,right);
         mergeSortedLists(v,t,left,center,right);
 
 
@@ -64,12 +66,32 @@ void mergeSort(vector<int>& v,vector<int>& t, int left, int right){
 
 void mergeSortedLists(vector<int>& v,vector<int>& t, int left, int middle,  int right){
     //t = v;
-    int temp;
-    for(int i = 0; i < (v.size() - 1); i++){
-        if(v.at(i) > v.at(i + 1)){
-            temp = v.at(i);
-            v.at(i) = v.at(i +1);
-            v.at(i + 1) = temp;
+    int temp = left;
+    int tempL = left;
+    int tempR = middle + 1;
+    while(tempL <= middle && tempR <= right ){
+        if(v.at(tempL) > v.at(tempR)){
+            t.at(temp) = v.at(tempR);
+            temp = temp + 1;
+            tempR = tempR + 1;
         }
+        else{
+            t.at(temp) = v.at(tempL);
+            temp = temp + 1;
+            tempL = tempL + 1;
+        }
+    }
+    while(tempR <= right){
+        t.at(temp) = v.at(tempR);
+        temp = temp + 1;
+        tempR = tempR + 1;
+    }
+    while(tempL <= middle){
+        t.at(temp) = v.at(tempL);
+        temp = temp + 1;
+        tempL = tempL + 1;
+    }
+    for(int i = left; i <= right; i++ ){
+        v.at(i) = t.at(i);
     }
 }
