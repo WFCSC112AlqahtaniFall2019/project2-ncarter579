@@ -29,7 +29,7 @@ int main() {
     // sort v
     /* your code here */
     mergeSort(v,t,0,length);
-    mergeSortedLists(v,t,0,length/2,length);
+    //mergeSortedLists(v,t,0,length/2,length - 1);
 
     // print output
     for(int i = 0; i < v.size(); i++) {
@@ -49,18 +49,27 @@ int main() {
 
 void mergeSort(vector<int>& v,vector<int>& t, int left, int right){
     int center;
-    if(v.size() == 1){
+    if((right - left) == 1){
         return;
     }
     else{
         center = (left + right)/2;
         mergeSort(v,t,left,center);
         mergeSort(v,t,center,right);
+        mergeSortedLists(v,t,left,center,right);
 
 
     }
 }
 
 void mergeSortedLists(vector<int>& v,vector<int>& t, int left, int middle,  int right){
-    
+    //t = v;
+    int temp;
+    for(int i = 0; i < (v.size() - 1); i++){
+        if(v.at(i) > v.at(i + 1)){
+            temp = v.at(i);
+            v.at(i) = v.at(i +1);
+            v.at(i + 1) = temp;
+        }
+    }
 }
