@@ -18,7 +18,12 @@ int main() {
     vector<int> t(length);  // temporary workspace
     // unit test for merge
     /* your code here */
-    
+    vector<int> a{5,3,9,1};
+    vector<int> b(4);
+    mergeSort(a,b,0,a.size() - 1);
+    for(int i = 1; i < a.size(); i++) {
+        assert(a.at(i-1) <= a.at(i));
+    }
 
 
     // initialize and print input
