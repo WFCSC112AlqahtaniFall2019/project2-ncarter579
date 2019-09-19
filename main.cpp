@@ -18,11 +18,11 @@ int main() {
     vector<int> t(length);  // temporary workspace
     // unit test for merge
     /* your code here */
-    vector<int> a{5,3,9,1};
-    vector<int> b(4);
-    mergeSort(a,b,0,a.size() - 1);
-    for(int i = 1; i < a.size(); i++) {
-        assert(a.at(i-1) <= a.at(i));
+    vector<int> a{5,3,9,1};  //setting up a vector with fixed numbers to test if mergeSort is working
+    vector<int> b(4);  //setting up a temporary vector that is the same length as vector a
+    mergeSort(a,b,0,a.size() - 1);  //calling mergeSort with these 2 vectors
+    for(int i = 1; i < a.size(); i++) {  //iterating over the sorted vector and checking that the vector is in ascending order
+        assert(a.at(i-1) <= a.at(i));  //will fail this assertion if its not in ascending order
     }
 
 
@@ -35,8 +35,7 @@ int main() {
 
     // sort v
     /* your code here */
-    mergeSort(v,t,0,length - 1);
-    //mergeSortedLists(v,t,0,length/2,length - 1);
+    mergeSort(v,t,0,length - 1);  //calling mergeSort with the real vectors this time
 
     // print output
     for(int i = 0; i < v.size(); i++) {
@@ -55,25 +54,24 @@ int main() {
 /* your code here */
 
 void mergeSort(vector<int>& v,vector<int>& t, int left, int right){
-    int center;
-    if(right <= left){
-        return;
+    int center;  //setting up a center variable so that we can find the center of each vector were working in every time we call the function
+    if(right <= left){  //checking to see if its in the correct order
+        return; //if its in the right order we can return because no further action is needed
     }
     else{
-        center = (left + right)/2;
-        mergeSort(v,t,left,center);
-        mergeSort(v,t,center + 1,right);
-        mergeSortedLists(v,t,left,center,right);
+        center = (left + right)/2;  //finding center of the vector
+        mergeSort(v,t,left,center);  //calls mergeSort recursively the first time to get the left side of the split
+        mergeSort(v,t,center + 1,right); //calls mergeSort recursively the second time to get the right side
+        mergeSortedLists(v,t,left,center,right);  //calls mergeSortedLists to combine the vectors after they are broken down
 
 
     }
 }
 
 void mergeSortedLists(vector<int>& v,vector<int>& t, int left, int middle,  int right){
-    //t = v;
-    int temp = left;
-    int tempL = left;
-    int tempR = middle + 1;
+    int temp = left; //setting up a temp value that is initialised to the leftmost value in the vector
+    int tempL = left;  //setting up a temp value that will be used as the left side of each vector we're working with
+    int tempR = middle + 1;  //setting up a temp value that will be used as the right side of each vector we're working with
     while(tempL <= middle && tempR <= right ){
         if(v.at(tempL) > v.at(tempR)){
             t.at(temp) = v.at(tempR);
@@ -87,7 +85,7 @@ void mergeSortedLists(vector<int>& v,vector<int>& t, int left, int middle,  int 
         }
     }
     while(tempR <= right){
-        t.at(temp) = v.at(tempR);
+        t.at(temp) = v.at(tempR);  
         temp = temp + 1;
         tempR = tempR + 1;
     }
